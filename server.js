@@ -21,17 +21,16 @@ app.post('/log-ip', (req, res) => {
   // Log the IP address to the console
   console.log(logMessage);
 
-    // Send the IP address to the Discord webhook
-    axios.post(DISCORD_WEBHOOK_URL, {
-      content: `New visitor IP logged: ${clientIp}`
-    })
-    .then(() => {
-      res.status(200).send('IP address logged and sent to Discord');
-    })
-    .catch((error) => {
-      console.error('Error sending to Discord webhook:', error);
-      res.status(500).send('Error logging IP address and sending to Discord');
-    });
+  // Send the IP address to the Discord webhook
+  axios.post(DISCORD_WEBHOOK_URL, {
+    content: `New visitor IP logged: ${clientIp}`
+  })
+  .then(() => {
+    res.status(200).send('IP address logged and sent to Discord');
+  })
+  .catch((error) => {
+    console.error('Error sending to Discord webhook:', error);
+    res.status(500).send('Error logging IP address and sending to Discord');
   });
 });
 
