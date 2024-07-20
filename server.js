@@ -5,14 +5,19 @@ const port = 3000;
 
 app.use(express.json());
 
+// Enable CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 app.post('/log-ip', (req, res) => {
   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const logMessage = `Client IP: ${clientIp} - Date: ${new Date().toISOString()}\n`;
 
-  // Log the IP address to the console
   console.log(logMessage);
 
-  // Append the IP address to a log file
   fs.appendFile('server.log', logMessage, (err) => {
     if (err) {
       console.error('Error writing to log file:', err);
